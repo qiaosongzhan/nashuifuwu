@@ -36,7 +36,7 @@
 		 document.forms[0].submit();
 		}
 		function doExportExcel(){
-         windows.open("${basePath}nsfw/user_exportExcel.action");
+         window.open("${basePath}nsfw/user_exportExcel.action");
 		}
 		function doImportExcel(){
 		//要提交的不能用window.open()

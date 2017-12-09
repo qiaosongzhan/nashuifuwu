@@ -1,6 +1,7 @@
 package cn.itcast.nsfw.user.action;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -8,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.aspectj.util.FileUtil;
 
@@ -161,6 +163,7 @@ public class UserAction extends ActionSupport{
 	public void exportExcel(){
 		try {
 			//可以循环删除
+			System.out.println(userList!=null);
 			userList = userService.findObjects();
 			HttpServletResponse response = ServletActionContext.getResponse();
 			response.setContentType("application/x-msexcel");
@@ -186,5 +189,28 @@ public class UserAction extends ActionSupport{
 		}
 		return "list";
 		
+	}
+	//账号唯一性验证
+	public void verifyAccount() {
+		try {
+			if(user!=null&&StringUtils.isNotBlank(user.getAccount())){//StringUtils  null与空字符串都能一次校验********
+				//1.获取账号
+				List<User> list = userService.findUserByAccountAndId(user.getId(),user.getAccount());
+				//2.根据账号到数据库中校验此账号是否存在
+				System.out.println(list.size());
+				String strResult = "true";
+				if(list != null && list.size() > 0){//list != null单个条件不行
+					strResult="false";
+				}
+				HttpServletResponse response = ServletActionContext.getResponse();
+				response.setContentType("text/html");
+				ServletOutputStream outputStream = response.getOutputStream();
+				outputStream.write(strResult.getBytes());
+				outputStream.close();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

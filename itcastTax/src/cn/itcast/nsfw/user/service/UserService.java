@@ -17,6 +17,8 @@ public interface UserService {
 		public void delete(Serializable id);
 	  //根据id查找
 		public User findObjectById(Serializable id);
+		//根据id和account查找
+		public List<User> findUserByAccountAndId(String id,String account);
 	  //查找列表
 		public List<User> findObjects();
 		//导出列表

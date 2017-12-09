@@ -1,20 +1,12 @@
 package cn.itcast.nsfw.user.service.impl;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.stereotype.Service;
 
 import cn.itcast.core.dao.util.ExcelUtil;
@@ -63,5 +55,10 @@ public class UserServiceImpl implements UserService {
 				save(user);
 			}
 		}
+	}
+
+	@Override
+	public List<User> findUserByAccountAndId(String id, String account) {
+		return userDao.findUserByAccountAndId(id, account);
 	}
 }
