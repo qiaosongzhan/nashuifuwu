@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.ServletOutputStream;
 
+import cn.itcast.core.exception.ServiceException;
 import cn.itcast.nsfw.user.entity.User;
 
 public interface UserService {
@@ -20,7 +21,7 @@ public interface UserService {
 		//根据id和account查找
 		public List<User> findUserByAccountAndId(String id,String account);
 	  //查找列表
-		public List<User> findObjects();
+		public List<User> findObjects() throws ServiceException;
 		//导出列表
 		public void exportExcel(List<User> userList,ServletOutputStream outputStream);
 		//导入用户列表

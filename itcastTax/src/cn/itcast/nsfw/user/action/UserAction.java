@@ -1,7 +1,6 @@
 package cn.itcast.nsfw.user.action;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,12 +12,12 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.aspectj.util.FileUtil;
 
+import cn.itcast.core.action.BaseAction;
+import cn.itcast.core.exception.ActionException;
 import cn.itcast.nsfw.user.entity.User;
 import cn.itcast.nsfw.user.service.UserService;
 
-import com.opensymphony.xwork2.ActionSupport;
-
-public class UserAction extends ActionSupport{
+public class UserAction extends BaseAction{
 	@Resource
 	private UserService userService;
 	private List<User> userList;
@@ -74,8 +73,12 @@ public class UserAction extends ActionSupport{
 		this.selectedRow = selectedRow;
 	}
 	//列表页面
-	public String listUI(){
-		userList = userService.findObjects();
+	public String listUI() throws ActionException{
+		try {
+			userList = userService.findObjects();
+		} catch (Exception e) {
+			throw new ActionException("Action 出现异常;"+e.getMessage());
+		}
 		return "listUI";
 		
 	}
@@ -197,7 +200,6 @@ public class UserAction extends ActionSupport{
 				//1.获取账号
 				List<User> list = userService.findUserByAccountAndId(user.getId(),user.getAccount());
 				//2.根据账号到数据库中校验此账号是否存在
-				System.out.println(list.size());
 				String strResult = "true";
 				if(list != null && list.size() > 0){//list != null单个条件不行
 					strResult="false";

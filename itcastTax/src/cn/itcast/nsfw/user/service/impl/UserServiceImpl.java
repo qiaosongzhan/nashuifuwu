@@ -10,6 +10,7 @@ import javax.servlet.ServletOutputStream;
 import org.springframework.stereotype.Service;
 
 import cn.itcast.core.dao.util.ExcelUtil;
+import cn.itcast.core.exception.ServiceException;
 import cn.itcast.nsfw.user.dao.UserDao;
 import cn.itcast.nsfw.user.entity.User;
 import cn.itcast.nsfw.user.service.UserService;
@@ -37,7 +38,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> findObjects() {
+	public List<User> findObjects() throws ServiceException {
+		try {
+			int a = 1/0;
+		} catch (Exception e) {
+			throw new ServiceException("service 出现异常;"+e.getMessage());
+		}
 		return userDao.findObjects();
 	}
 
@@ -58,7 +64,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> findUserByAccountAndId(String id, String account) {
+	public List<User> findUserByAccountAndId(String id, String account){
 		return userDao.findUserByAccountAndId(id, account);
 	}
 }
