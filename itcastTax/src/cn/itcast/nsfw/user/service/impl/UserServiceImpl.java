@@ -40,7 +40,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> findObjects() throws ServiceException {
 		try {
-			int a = 1/0;
 		} catch (Exception e) {
 			throw new ServiceException("service 出现异常;"+e.getMessage());
 		}
